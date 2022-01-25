@@ -1,7 +1,7 @@
 ﻿{
   "ConnectionStrings": {
     "ConnectionString.LocalDb": "Server=(localdb)\\mssqllocaldb;Database=SAFDatabaseTests",
-    "ConnectionString": "Server=sqlserver; Database=SAFDatabaseTests; MultipleActiveResultSets=true; User=sa; Password=ThisShouldBeAStr0ngPassword!",
-    "ConnectionString.Azure": "Server=tcp:sql-saf.database.windows.net,1433;Initial Catalog=SAFDatabase;Persist Security Info=False;User ID=saf-admin;Password=ThisShouldBeAStr0ngPassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    "ConnectionString": "Server=sqlserver; Database=SAFDatabaseTests; MultipleActiveResultSets=true; User=sa; Password=AStr0ngPasswordSh0uldBeH3r3!",
+    "ConnectionString.Azure": "Server=tcp:sql-saf.database.windows.net,1433;Initial Catalog=SAFDatabase;Persist Security Info=False;User ID=saf-admin;Password=AStr0ngPasswordSh0uldBeH3r3!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   }
 }

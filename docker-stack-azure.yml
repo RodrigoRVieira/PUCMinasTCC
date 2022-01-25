@@ -4,10 +4,10 @@ services:
   
     sqlserver:
       image: gisa_sqlserver
-      command: sh -c "/wait && /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ThisShouldBeAStr0ngPassword! -i /scripts/dbcreate.sql & /opt/mssql/bin/sqlservr"
+      command: sh -c "/wait && /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P AStr0ngPasswordSh0uldBeH3r3! -i /scripts/dbcreate.sql & /opt/mssql/bin/sqlservr"
       environment:
         - ACCEPT_EULA=Y
-        - SA_PASSWORD=ThisShouldBeAStr0ngPassword!
+        - SA_PASSWORD=AStr0ngPasswordSh0uldBeH3r3!
         - MSSQL_PID=Standard
         - WAIT_HOSTS=localhost:1433
         - WAIT_AFTER=5
@@ -118,8 +118,8 @@ services:
       ports:
         - 443:443
       volumes:
-        - /etc/letsencrypt/archive/vm-pucminas-tcc.eastus.cloudapp.azure.com/fullchain1.pem:/certs/fullchain.pem
-        - /etc/letsencrypt/archive/vm-pucminas-tcc.eastus.cloudapp.azure.com/privkey1.pem:/certs/privkey.pem
+        - /etc/letsencrypt/archive/poc-tcc-host/fullchain1.pem:/certs/fullchain.pem
+        - /etc/letsencrypt/archive/poc-tcc-host/privkey1.pem:/certs/privkey.pem
         - ./nginx.conf.azure:/etc/nginx/nginx.conf:ro
 
 networks:

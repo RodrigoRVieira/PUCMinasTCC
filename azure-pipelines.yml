@@ -7,12 +7,9 @@ trigger:
 - dev
 
 pool:
-  #Azure Hosted Agent
-  #vmImage: 'ubuntu-latest'
-  #Self-Hosted
   name: GISA-VM
   demands:
-  - Agent.Name -equals vm-pucminas-tcc
+  - Agent.Name -equals vm-pucminas-agent
 
 variables:
   buildConfiguration: 'Release'

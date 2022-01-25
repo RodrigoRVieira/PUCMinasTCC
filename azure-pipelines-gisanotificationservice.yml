@@ -9,10 +9,6 @@ trigger:
 pool:
   #Azure Hosted Agent
   vmImage: 'ubuntu-latest'
-  #Self-Hosted
-  #name: GISA-VM
-  #demands:
-  #- Agent.Name -equals vm-pucminas-tcc
 
 variables:
   buildConfiguration: 'Release'
