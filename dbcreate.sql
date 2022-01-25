@@ -1,0 +1,2 @@
+CREATE DATABASE SAFDatabase
+GO

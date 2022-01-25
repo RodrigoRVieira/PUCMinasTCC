@@ -1,0 +1,132 @@
+version: "3.8"
+
+services:
+  
+    sqlserver:
+      image: gisa_sqlserver
+      command: sh -c "/wait && /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ThisShouldBeAStr0ngPassword! -i /scripts/dbcreate.sql & /opt/mssql/bin/sqlservr"
+      environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=ThisShouldBeAStr0ngPassword!
+        - MSSQL_PID=Standard
+        - WAIT_HOSTS=localhost:1433
+        - WAIT_AFTER=5
+      networks:
+        - backend
+      ports:
+        - 1433:1433 #TODO: Remove
+      volumes:
+        - safdatabase:/var/opt/mssql
+        - ./dbcreate.sql:/scripts/dbcreate.sql
+
+    redis:
+      image: redis:6.2.6
+      networks:
+        - backend
+      ports:
+        - 6379:6379 #TODO: Remove
+
+    redis-commander:
+      depends_on:
+        - redis
+      environment:
+        - REDIS_HOSTS=local:redis:6379
+      image: rediscommander/redis-commander
+      networks:
+        - backend
+      ports:
+        - 82:8081
+
+    safwebapi:
+      image: gisa_safwebapi
+      command: sh -c "/wait && dapr run --app-id safwebapi --app-port 5000 --dapr-http-port 3600 --dapr-grpc-port 60000 --config /dapr/config/config.yaml --components-path /dapr dotnet SAF.WebApi.dll"
+      depends_on:
+        - sqlserver
+        - redis
+        - rabbitmq
+      environment:
+        - ASPNETCORE_URLS=http://0.0.0.0:5000
+        - DAPR=Yes
+        - REDIS_HOST=redis
+        - WAIT_HOSTS=sqlserver:1433
+        - WAIT_AFTER=10
+      networks:
+        - backend
+
+    gisaauthorizationservice:
+      image: gisa_gisaauthorizationservice
+      command: sh -c "/wait && dotnet GISA.AuthorizationService.dll"
+      environment:
+        - ASPNETCORE_URLS=http://0.0.0.0:5001
+      networks:
+        - backend
+
+    gisamessageprocessor:
+      image: gisa_gisamessageprocessor
+      command: sh -c "/wait && dapr run --app-id gisamessageprocessor --app-port 6000 --dapr-http-port 3601 --dapr-grpc-port 60001 --config /dapr/config/config.yaml --components-path /dapr dotnet GISA.MessageProcessor.dll"
+      depends_on:
+        - rabbitmq
+      environment:
+        - ASPNETCORE_URLS=http://0.0.0.0:6000
+        - WAIT_HOSTS=rabbitmq:5672,sqlserver:1433
+        - WAIT_AFTER=10
+      networks:
+        - backend
+
+    gisanotificationservice:
+      image: gisa_gisanotificationservice
+      command: sh -c "/wait && dapr run --app-id gisanotificationservice --app-port 7000 --dapr-http-port 3602 --dapr-grpc-port 60002 --config /dapr/config/config.yaml --components-path /dapr python server.py"
+      depends_on:
+        - rabbitmq
+      environment:
+        - WAIT_HOSTS=rabbitmq:5672
+        - WAIT_AFTER=10
+      networks:
+        - backend
+
+    rabbitmq:
+      image: rabbitmq:3.9.8-management-alpine
+      networks:
+        - backend
+      ports:
+        - 81:15672
+
+    mailserver:
+      image: maildev/maildev:latest
+      networks:
+        - backend
+      ports:
+        - 4025:25
+        - 4000:80
+
+    openzipkin:
+      image: openzipkin/zipkin
+      networks:
+        - backend
+      ports:
+        - 9411:9411
+
+    nginx:
+      image: nginx:1.21.3-alpine
+      depends_on:
+        - safwebapi
+        - redis-commander
+        - rabbitmq
+      networks:
+        - frontend
+        - backend
+      ports:
+        - 443:443
+      volumes:
+        - /etc/letsencrypt/archive/vm-pucminas-tcc.eastus.cloudapp.azure.com/fullchain1.pem:/certs/fullchain.pem
+        - /etc/letsencrypt/archive/vm-pucminas-tcc.eastus.cloudapp.azure.com/privkey1.pem:/certs/privkey.pem
+        - ./nginx.conf.azure:/etc/nginx/nginx.conf:ro
+
+networks:
+  frontend:
+    driver: overlay
+  backend:
+    driver: overlay
+
+volumes:
+  safdatabase:

@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "17c56e1b-3bab-4f5c-88f6-f2db7bb18a24",
+		"name": "GISA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "Authenticate",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n// Associado\n{\n    \"Login\": \"Associado-3000\",\n    \"Password\": \"bo@saud3\"\n}\n\n/*\n// Prestador\n{\n    \"Login\": \"Prestador-20000\",\n    \"Password\": \"bo@saud3\"\n}\n*/",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1.0/Authorization",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1.0",
+								"Authorization"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Associado",
+			"item": [
+				{
+					"name": "Especialidade",
+					"item": [
+						{
+							"name": "Recuperar por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1.0/Especialidade/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Especialidade",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar Todas",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/v1.0/Especialidade",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Especialidade"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Prestador",
+					"item": [
+						{
+							"name": "Recuperar por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1.0/Prestador/2000",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Prestador",
+										"2000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar por Estado",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1.0/Prestador/PorEstado/RJ",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Prestador",
+										"PorEstado",
+										"RJ"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recuperar por Especialidade",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1.0/Prestador/PorEspecialidade/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Prestador",
+										"PorEspecialidade",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Consulta",
+					"item": [
+						{
+							"name": "Solicitar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"especialidadeId\": 3,\r\n    \"prestadorId\": 30000,\r\n    \"data\": \"2021-02-14 12:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/v1.0/Consulta",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Consulta"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Prestador",
+			"item": [
+				{
+					"name": "Consulta",
+					"item": [
+						{
+							"name": "Recuperar por Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/v1.0/Consulta/PorStatus/Criada",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"v1.0",
+										"Consulta",
+										"PorStatus",
+										"Criada"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SAF.WebApi - Version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GISA.AuthorizationService - Version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\n// Associado\n{\n    \"Login\": \"Associado-3000\",\n    \"Password\": \"bo@saud3\"\n}\n*/\n\n// Prestador\n{\n    \"Login\": \"Prestador-20000\",\n    \"Password\": \"bo@saud3\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1.0/Authorization",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1.0",
+						"Authorization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GISA.NotificationService - Version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\n// Associado\n{\n    \"Login\": \"Associado-3000\",\n    \"Password\": \"bo@saud3\"\n}\n*/\n\n// Prestador\n{\n    \"Login\": \"Prestador-20000\",\n    \"Password\": \"bo@saud3\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1.0/Notification",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1.0",
+						"Notification"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQZXNzb2FJZCI6IjMwMDAiLCJQZXNzb2FUaXBvIjoiQXNzb2NpYWRvIiwibmJmIjoxNjQyOTcxODAwLCJleHAiOjE2NDI5NzU0MDAsImlhdCI6MTY0Mjk3MTgwMH0.R7U1OT2bcw4ANChfZpl5vZB-fvpMoSVEy4HnpZ3ojhI",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
